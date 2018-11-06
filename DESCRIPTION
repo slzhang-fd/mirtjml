@@ -1,0 +1,31 @@
+Package: mirtjml
+Type: Package
+Title: Joint Maximum Likelihood Estimation for High-Dimensional Item Factor Analysis
+Version: 1.0
+Date: 2018-11-5
+Authors@R: c(
+    person("Siliang", "Zhang", email = "zhangsiliang123@gmail.com", role = c("aut", "cre")),
+    person("Yunxiao", "Chen", role = "aut"),
+    person("Xiaoou", "Li", role = "aut")
+    )
+Maintainer: Siliang Zhang <zhangsiliang123@gmail.com>
+Description: The mirtjml package provides constrained joint maximum likelihood estimation
+    algorithms for item factor analysis (IFA) based on multidimensional item response theory
+    models. So far, we provide functions for exploratory and confirmatory IFA based on the 
+    multidimensional two parameter logistic (M2PL) model for binary response data. Comparing 
+    with traditional estimation methods for IFA, the methods implemented in this package scale
+    better to data with large numbers of respondents, items, and latent factors. The computation
+    is facilitated by multiprocessing 'OpenMP' API.
+License: GPL-3
+LazyData: true
+Depends: R (>= 3.1)
+Imports: 
+    Rcpp (>= 0.12.17),
+    stats,
+    GPArotation
+LinkingTo: Rcpp, RcppArmadillo
+RoxygenNote: 6.1.0
+Encoding: UTF-8
+Author: Siliang Zhang [aut, cre],
+    Yunxiao Chen [aut],
+    Xiaoou Li [aut]
