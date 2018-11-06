@@ -1,6 +1,6 @@
 # mirtjml
 
-## Joint Maximum Likelihood Estimation for High-Dimensional Item Factor Analysis
+Joint Maximum Likelihood Estimation for High-Dimensional Item Factor Analysis
 
 ## Description
 
