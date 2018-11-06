@@ -17,6 +17,7 @@ Description: The mirtjml package provides constrained joint maximum likelihood e
     better to data with large numbers of respondents, items, and latent factors. The computation
     is facilitated by multiprocessing 'OpenMP' API.
 License: GPL-3
+URL: https://github.com/mrsta235/mirtjml
 LazyData: true
 Depends: R (>= 3.1)
 Imports: 
