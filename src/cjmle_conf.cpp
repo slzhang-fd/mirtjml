@@ -54,12 +54,24 @@ Rcpp::List cjmle_conf_cpp(const arma::mat &response, const arma::mat &nonmis_ind
   
   double eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
   while(eps > tol){
-    if(print_proc) Rprintf("\n eps: %f", eps);
     theta0 = theta1;
     A0 = A1;
     theta1 = Update_theta_cpp(theta0, response, nonmis_ind, A0, cc);
     A1 = Update_A_conf_cpp(A0, Q, response, nonmis_ind, theta1, cc);
     eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
+    // if(print_proc) Rprintf("\n eps: %f", eps);
+    if(print_proc){
+      double cc = log(eps) / log(tol);
+      Rcpp::Rcout<< "\r|";
+      for(int i=0;i<floor(30*cc);++i){
+        Rcpp::Rcout << "=";
+      }
+      for(int i=0;i<(30-floor(30*cc));++i){
+        Rcpp::Rcout << " ";
+      }
+      int nn = ceil(100*cc);
+      Rcpp::Rcout << "|" << min(100, nn) << "%, " << "eps: " << eps;
+    }
   }
   return Rcpp::List::create(Rcpp::Named("A") = A1.cols(1,K-1),
                             Rcpp::Named("d") = A1.cols(0,0),
