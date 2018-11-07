@@ -48,6 +48,8 @@ Rcpp::List cjmle_conf_cpp(const arma::mat &response, const arma::mat &nonmis_ind
                                     arma::mat A0, arma::mat Q, double cc, double tol, bool print_proc, bool parallel){
   if(!parallel)
     omp_set_num_threads(1);
+  else
+    omp_set_num_threads(omp_get_num_procs());
   int K = theta0.n_cols;
   arma::mat theta1 = Update_theta_cpp(theta0, response, nonmis_ind, A0, cc);
   arma::mat A1 = Update_A_conf_cpp(A0, Q, response, nonmis_ind, theta1, cc);

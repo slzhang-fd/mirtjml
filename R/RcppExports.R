@@ -13,6 +13,11 @@ cjmle_expr_cpp <- function(response, nonmis_ind, theta0, A0, cc, tol, print_proc
     .Call('_mirtjml_cjmle_expr_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, cc, tol, print_proc, parallel)
 }
 
+#' @export
+check_cores <- function() {
+    .Call('_mirtjml_check_cores', PACKAGE = 'mirtjml')
+}
+
 prox_func_cpp <- function(y, C) {
     .Call('_mirtjml_prox_func_cpp', PACKAGE = 'mirtjml', y, C)
 }

@@ -47,6 +47,8 @@ Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind
   // int J = A0.n_rows;
   if(!parallel)
     omp_set_num_threads(1);
+  else
+    omp_set_num_threads(omp_get_num_procs());
   arma::mat theta1 = Update_theta_cpp(theta0, response, nonmis_ind, A0, cc);
   arma::mat A1 = Update_A_cpp(A0, response, nonmis_ind, theta1, cc);
   double eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
@@ -74,4 +76,8 @@ Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind
                             Rcpp::Named("theta") = theta1,
                             Rcpp::Named("obj") = neg_loglik(theta1*A1.t(), response, nonmis_ind));
 }
-
+//' @export
+// [[Rcpp::export]]
+int check_cores(){
+  return omp_get_num_procs();
+}
