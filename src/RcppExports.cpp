@@ -43,16 +43,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// check_cores
-int check_cores();
-RcppExport SEXP _mirtjml_check_cores() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(check_cores());
-    return rcpp_result_gen;
-END_RCPP
-}
 // prox_func_cpp
 arma::vec prox_func_cpp(const arma::vec& y, double C);
 RcppExport SEXP _mirtjml_prox_func_cpp(SEXP ySEXP, SEXP CSEXP) {
@@ -69,7 +59,6 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_mirtjml_cjmle_conf_cpp", (DL_FUNC) &_mirtjml_cjmle_conf_cpp, 9},
     {"_mirtjml_cjmle_expr_cpp", (DL_FUNC) &_mirtjml_cjmle_expr_cpp, 8},
-    {"_mirtjml_check_cores", (DL_FUNC) &_mirtjml_check_cores, 0},
     {"_mirtjml_prox_func_cpp", (DL_FUNC) &_mirtjml_prox_func_cpp, 2},
     {NULL, NULL, 0}
 };

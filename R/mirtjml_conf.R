@@ -20,7 +20,6 @@
 #' Chen, Y., Li, X., & Zhang, S. (2017). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. \emph{arXiv preprint.} arXiv:1712.08966.
 #' 
 #' @examples
-#' \dontrun{
 #' # load a simulated dataset
 #' attach(data_sim)
 #' 
@@ -32,7 +31,6 @@
 #' # run the confirmatory analysis
 #' res_conf <- mirtjml_conf(response, Q, theta0, A0, d0)
 #' 
-#' }
 #' 
 #' @importFrom stats cov
 #' @export mirtjml_conf
@@ -41,6 +39,7 @@ mirtjml_conf <- function(response, Q, theta0, A0, d0, cc = NULL, tol = 1e-4, pri
   J <- ncol(response)
   K <- ncol(Q)
   nonmis_ind <- 1 - is.na(response)
+  response[is.na(response)] <- 0
   if(is.null(cc)){
     cc = 5*sqrt(K)
   }

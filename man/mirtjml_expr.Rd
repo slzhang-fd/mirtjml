@@ -38,14 +38,12 @@ The function returns a list with the following components:
 Constrained joint maximum likelihood estimation for exploratory item factor analysis on the multidimensional two parameter logistic model.
 }
 \examples{
-\dontrun{
 # load a simulated dataset
 attach(data_sim)
 
 # run the exploratory analysis
 res <- mirtjml_expr(response, K)
 
-}
 
 }
 \references{

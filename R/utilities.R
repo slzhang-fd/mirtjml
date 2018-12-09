@@ -13,6 +13,7 @@ svd_start <- function(response, nonmis_ind, K, tol = 0.01){
   J <- ncol(response)
   p_hat <- sum(nonmis_ind) / N / J
   X <- (2 * response - 1) * nonmis_ind
+  X[is.na(X)] <- 0
   temp <- svd(X)
   eff_num <- sum(temp$d >= 2*sqrt(N*p_hat))
   diagmat <- matrix(0, eff_num, eff_num)

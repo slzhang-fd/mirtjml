@@ -20,14 +20,12 @@
 #' Chen, Y., Li, X., and Zhang, S. (2018). Joint Maximum Likelihood Estimation for Highdimensional Exploratory Item Response Analysis. \emph{Psychometrika}. To appear.
 #' 
 #' @examples
-#' \dontrun{
 #' # load a simulated dataset
 #' attach(data_sim)
 #' 
 #' # run the exploratory analysis
 #' res <- mirtjml_expr(response, K)
 #' 
-#' }
 #' 
 #' @importFrom GPArotation GPFoblq
 #' @export mirtjml_expr
@@ -36,6 +34,7 @@ mirtjml_expr <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = 
   N <- nrow(response)
   J <- ncol(response)
   nonmis_ind <- 1 - is.na(response)
+  response[is.na(response)] <- 0
   if(is.null(theta0) || is.null(A0) || is.null(d0)){
     t1 <- Sys.time()
     if(print_proc){
