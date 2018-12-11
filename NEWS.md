@@ -1,5 +1,12 @@
 
 ** updates
+### 11 Oct, 2018
+- fix cran comments: to link the preprint from the CRAN webpage, add angle brackets around arxiv reference
+- update Github repository link
+- add BugReports link
+- add Travis-CI icon
+- update version number to 1.2
+
 
 ### 10 Oct, 2018
 #### Resubmission
