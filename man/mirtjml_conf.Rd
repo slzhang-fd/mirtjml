@@ -52,5 +52,5 @@ res_conf <- mirtjml_conf(response, Q, theta0, A0, d0)
 
 }
 \references{
-Chen, Y., Li, X., & Zhang, S. (2017). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. \emph{arXiv preprint.} arXiv:1712.08966.
+Chen, Y., Li, X., & Zhang, S. (2017). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. \emph{arXiv preprint} <arXiv:1712.08966>.
 }

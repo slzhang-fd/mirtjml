@@ -17,8 +17,7 @@
 #'   \item{d_hat}{The estimated intercept parameters.}
 #' }
 #' @references 
-#' Chen, Y., Li, X., & Zhang, S. (2017). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. \emph{arXiv preprint.} arXiv:1712.08966.
-#' 
+#' Chen, Y., Li, X., & Zhang, S. (2017). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. \emph{arXiv preprint} <arXiv:1712.08966>.
 #' @examples
 #' # load a simulated dataset
 #' attach(data_sim)

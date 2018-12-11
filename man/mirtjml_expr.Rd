@@ -47,5 +47,5 @@ res <- mirtjml_expr(response, K)
 
 }
 \references{
-Chen, Y., Li, X., and Zhang, S. (2018). Joint Maximum Likelihood Estimation for Highdimensional Exploratory Item Response Analysis. \emph{Psychometrika}. To appear.
+Chen, Y., Li, X., & Zhang, S. (2018). Joint Maximum Likelihood Estimation for High-Dimensional Exploratory Item Factor Analysis. \emph{Psychometrika}, 1-23. <doi:10.1007/s11336-018-9646-5>;
 }
