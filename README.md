@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.com/mrsta235/mirtjml.svg?branch=master)](https://travis-ci.com/mrsta235/mirtjml)
+[![Travis-CI Build Status](https://travis-ci.com/slzhang-fd/mirtjml.svg?branch=master)](https://travis-ci.com/slzhang-fd/mirtjml)
 
 # mirtjml
 
