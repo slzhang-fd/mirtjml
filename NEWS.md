@@ -9,4 +9,4 @@
 - remove 'not run' in function examples
 
 ### 30 Sep, 2018
-#### fix the bug when input K = 1
+#### fix the bug when input K = 1 
