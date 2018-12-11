@@ -1,8 +1,8 @@
 Package: mirtjml
 Type: Package
 Title: Joint Maximum Likelihood Estimation for High-Dimensional Item Factor Analysis
-Version: 1.1
-Date: 2018-12-10
+Version: 1.2
+Date: 2018-12-11
 Authors@R: c(
     person("Siliang", "Zhang", email = "zhangsiliang123@gmail.com", role = c("aut", "cre")),
     person("Yunxiao", "Chen", role = "aut"),
