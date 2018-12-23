@@ -1,5 +1,6 @@
 [![cran checks](https://cranchecks.info/badges/summary/mirtjml)](https://cran.r-project.org/web/checks/check_results_mirtjml.html)
 [![Travis-CI Build Status](https://travis-ci.com/slzhang-fd/mirtjml.svg?branch=master)](https://travis-ci.com/slzhang-fd/mirtjml)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mirtjml)](https://cran.r-project.org/package=mirtjml)
 [![downloads](http://cranlogs.r-pkg.org/badges/mirtjml)](https://www.rdocumentation.org/trends)
 # mirtjml
 
