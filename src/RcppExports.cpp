@@ -6,6 +6,21 @@
 
 using namespace Rcpp;
 
+// grad_neg_loglik_A_j_conf_cpp
+arma::vec grad_neg_loglik_A_j_conf_cpp(const arma::vec& response_j, const arma::vec& nonmis_ind_j, const arma::vec& A_j, const arma::vec& Q_j, const arma::mat& theta);
+RcppExport SEXP _mirtjml_grad_neg_loglik_A_j_conf_cpp(SEXP response_jSEXP, SEXP nonmis_ind_jSEXP, SEXP A_jSEXP, SEXP Q_jSEXP, SEXP thetaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type response_j(response_jSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type nonmis_ind_j(nonmis_ind_jSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type A_j(A_jSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type Q_j(Q_jSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type theta(thetaSEXP);
+    rcpp_result_gen = Rcpp::wrap(grad_neg_loglik_A_j_conf_cpp(response_j, nonmis_ind_j, A_j, Q_j, theta));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cjmle_conf_cpp
 Rcpp::List cjmle_conf_cpp(const arma::mat& response, const arma::mat& nonmis_ind, arma::mat theta0, arma::mat A0, arma::mat Q, double cc, double tol, bool print_proc, bool parallel);
 RcppExport SEXP _mirtjml_cjmle_conf_cpp(SEXP responseSEXP, SEXP nonmis_indSEXP, SEXP theta0SEXP, SEXP A0SEXP, SEXP QSEXP, SEXP ccSEXP, SEXP tolSEXP, SEXP print_procSEXP, SEXP parallelSEXP) {
@@ -126,6 +141,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_mirtjml_grad_neg_loglik_A_j_conf_cpp", (DL_FUNC) &_mirtjml_grad_neg_loglik_A_j_conf_cpp, 5},
     {"_mirtjml_cjmle_conf_cpp", (DL_FUNC) &_mirtjml_cjmle_conf_cpp, 9},
     {"_mirtjml_grad_neg_loglik_A_j_cpp", (DL_FUNC) &_mirtjml_grad_neg_loglik_A_j_cpp, 4},
     {"_mirtjml_cjmle_expr_cpp", (DL_FUNC) &_mirtjml_cjmle_expr_cpp, 8},

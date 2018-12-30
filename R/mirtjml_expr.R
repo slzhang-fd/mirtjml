@@ -79,7 +79,7 @@ mirtjml_expr <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = 
 }
 
 #' #' @export mirtjml_check
-#' mirtjml_check <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = NULL, 
+#' mirtjml_check <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = NULL,
 #'                                    tol = 1e-4, print_proc = TRUE, parallel = FALSE){
 #'   N <- nrow(response)
 #'   J <- ncol(response)
@@ -135,5 +135,14 @@ mirtjml_expr <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = 
 #'     cat((neg_loglik_j_cpp(response[,1], nonmis_ind[,1], y1, theta0)-
 #'            neg_loglik_j_cpp(response[,1], nonmis_ind[,1], y0, theta0))/1e-4, " ")
 #'   }
-#'   cat("\ncheck finished.....")
+#'   cat("\n ", grad_neg_loglik_A_j_conf_cpp(response[,1], nonmis_ind[,1], A0[1,], Q[1,], theta0), "\n")
+#'   y0 <- A0[1,]
+#'   cat("numerically: \t\t    ")
+#'   for(k in 1:K){
+#'     y1 <- y0
+#'     y1[k] <- y1[k] + 1e-4
+#'     cat((neg_loglik_j_cpp(response[,1], nonmis_ind[,1], y1, theta0)-
+#'            neg_loglik_j_cpp(response[,1], nonmis_ind[,1], y0, theta0))/1e-4, " ")
+#'   }
+#'   
 #' }
