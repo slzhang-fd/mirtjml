@@ -1,5 +1,10 @@
 
 ** updates
+### 30 Dec, 2018
+- optimized dependent functions
+- adaptively choose initial step sizes, this could speed up examples one time
+
+
 ### 11 Oct, 2018
 - fix cran comments: to link the preprint from the CRAN webpage, add angle brackets around arxiv reference
 - update Github repository link
