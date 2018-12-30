@@ -9,11 +9,31 @@ cjmle_conf_cpp <- function(response, nonmis_ind, theta0, A0, Q, cc, tol, print_p
 #' @importFrom Rcpp evalCpp
 NULL
 
+grad_neg_loglik_A_j_cpp <- function(response_j, nonmis_ind_j, A_j, theta) {
+    .Call('_mirtjml_grad_neg_loglik_A_j_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, theta)
+}
+
 cjmle_expr_cpp <- function(response, nonmis_ind, theta0, A0, cc, tol, print_proc, parallel) {
     .Call('_mirtjml_cjmle_expr_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, cc, tol, print_proc, parallel)
 }
 
 prox_func_cpp <- function(y, C) {
     .Call('_mirtjml_prox_func_cpp', PACKAGE = 'mirtjml', y, C)
+}
+
+neg_loglik <- function(thetaA, response, nonmis_ind) {
+    .Call('_mirtjml_neg_loglik', PACKAGE = 'mirtjml', thetaA, response, nonmis_ind)
+}
+
+neg_loglik_i_cpp <- function(response_i, nonmis_ind_i, A, theta_i) {
+    .Call('_mirtjml_neg_loglik_i_cpp', PACKAGE = 'mirtjml', response_i, nonmis_ind_i, A, theta_i)
+}
+
+grad_neg_loglik_thetai_cpp <- function(response_i, nonmis_ind_i, A, theta_i) {
+    .Call('_mirtjml_grad_neg_loglik_thetai_cpp', PACKAGE = 'mirtjml', response_i, nonmis_ind_i, A, theta_i)
+}
+
+neg_loglik_j_cpp <- function(response_j, nonmis_ind_j, A_j, theta) {
+    .Call('_mirtjml_neg_loglik_j_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, theta)
 }
 
