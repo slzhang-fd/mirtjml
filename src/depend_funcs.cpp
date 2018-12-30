@@ -26,22 +26,23 @@ arma::vec prox_func_theta_cpp(arma::vec y, double C){
 double neg_loglik(const arma::mat &thetaA, const arma::mat &response, const arma::mat &nonmis_ind){
   int N = response.n_rows;
   int J = response.n_cols;
-  double res = arma::accu( nonmis_ind % (thetaA % response - log(1+exp(thetaA))) );
-  return -res / N / J;
+  double res = arma::accu( nonmis_ind % arma::square(response - 1/(1+exp(-thetaA))) );
+  return res / N / J;
 }
 // [[Rcpp::export]]
 double neg_loglik_i_cpp(const arma::vec &response_i, const arma::vec &nonmis_ind_i,
                         const arma::mat &A, const arma::vec &theta_i){
   int J = response_i.n_elem;
   arma::vec tmp = A * theta_i;
-  return -arma::accu(nonmis_ind_i % (tmp % response_i - log(1 + exp(tmp))))/J;
+  return arma::accu( nonmis_ind_i % arma::square(response_i - 1/(1 + exp(-tmp))) )/J;
 }
 // [[Rcpp::export]]
 arma::vec grad_neg_loglik_thetai_cpp(const arma::vec &response_i, const arma::vec &nonmis_ind_i,
                                      const arma::mat &A, const arma::vec &theta_i){
   int J = response_i.n_elem;
-  arma::vec tmp = response_i - 1 / (1 + exp(- A * theta_i));
-  return -A.t() * (nonmis_ind_i % tmp)/J;
+  arma::vec tmp = exp(A * theta_i);
+  arma::vec tmp1 = (response_i - tmp / (1 + tmp)) % tmp / arma::square(1+tmp);
+  return -2 * A.t() * (nonmis_ind_i % tmp1)/J;
 }
 
 // [[Rcpp::plugins(openmp)]]
@@ -105,5 +106,5 @@ double neg_loglik_j_cpp(const arma::vec &response_j, const arma::vec &nonmis_ind
                         const arma::vec &A_j, const arma::mat &theta){
   int N = response_j.n_elem;
   arma::vec tmp = theta * A_j;
-  return -arma::accu(nonmis_ind_j % (tmp % response_j - log(1+exp(tmp))))/N;
+  return arma::accu(nonmis_ind_j % arma::square(response_j - 1/(1+exp(-tmp))))/N;
 }

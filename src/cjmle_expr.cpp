@@ -11,8 +11,9 @@ using namespace std;
 arma::vec grad_neg_loglik_A_j_cpp(const arma::vec &response_j, const arma::vec &nonmis_ind_j,
                                   const arma::vec &A_j, const arma::mat &theta){
   int N = response_j.n_elem;
-  arma::vec tmp = response_j - 1 / (1 + exp(-theta * A_j));
-  return -theta.t() * (nonmis_ind_j % tmp)/N;
+  arma::vec tmp = exp(theta * A_j);
+  arma::vec tmp1 = (response_j - tmp / (1 + tmp)) % tmp / arma::square(1+tmp);
+  return -2*theta.t() * (nonmis_ind_j % tmp1)/N;
 }
 // [[Rcpp::plugins(openmp)]]
 arma::mat Update_A_cpp(const arma::mat &A0, const arma::mat &response, const arma::mat &nonmis_ind,
@@ -82,7 +83,7 @@ Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind
   Rcpp::List tmp_A = Update_A_init_cpp(A0, response, nonmis_ind, theta1, cc);
   arma::mat A1 = tmp_A[0];
   arma::vec A_step = tmp_A[1];
-  double A_init_step = mean(A_step)/2;
+  double A_init_step = mean(A_step);
   
   double eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
   while(eps > tol){
