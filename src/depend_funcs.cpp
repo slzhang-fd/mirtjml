@@ -24,24 +24,20 @@ arma::vec prox_func_theta_cpp(arma::vec y, double C){
 }
 // [[Rcpp::export]]
 double neg_loglik(const arma::mat &thetaA, const arma::mat &response, const arma::mat &nonmis_ind){
-  int N = response.n_rows;
-  int J = response.n_cols;
   double res = arma::accu( nonmis_ind % (thetaA % response - log(1+exp(thetaA))) );
-  return -res / N / J;
+  return -res;
 }
 // [[Rcpp::export]]
 double neg_loglik_i_cpp(const arma::vec &response_i, const arma::vec &nonmis_ind_i,
                         const arma::mat &A, const arma::vec &theta_i){
-  int J = response_i.n_elem;
   arma::vec tmp = A * theta_i;
-  return -arma::accu(nonmis_ind_i % (tmp % response_i - log(1 + exp(tmp))))/J;
+  return -arma::accu(nonmis_ind_i % (tmp % response_i - log(1 + exp(tmp))));
 }
 // [[Rcpp::export]]
 arma::vec grad_neg_loglik_thetai_cpp(const arma::vec &response_i, const arma::vec &nonmis_ind_i,
                                      const arma::mat &A, const arma::vec &theta_i){
-  int J = response_i.n_elem;
   arma::vec tmp = response_i - 1 / (1 + exp(- A * theta_i));
-  return -A.t() * (nonmis_ind_i % tmp)/J;
+  return -A.t() * (nonmis_ind_i % tmp);
 }
 
 // [[Rcpp::plugins(openmp)]]
@@ -62,10 +58,6 @@ arma::mat Update_theta_cpp(const arma::mat &theta0, const arma::mat &response,
       step *= 0.5;
       theta1.col(i) = theta0.row(i).t() - step * h;
       theta1.col(i) = prox_func_theta_cpp(theta1.col(i), C);
-      if(step <= 1e-4){
-        Rprintf("error in update theta\n");
-        // there will be problem if step size is too small
-      }
     }
     //Rcpp::Rcout << "\n final step loop when updating theta = "<< -log(step/step_theta)/log(2)<< "\n";
   }
@@ -90,10 +82,6 @@ Rcpp::List Update_theta_init_cpp(const arma::mat &theta0, const arma::mat &respo
       step *= 0.5;
       theta1.col(i) = theta0.row(i).t() - step * h;
       theta1.col(i) = prox_func_theta_cpp(theta1.col(i), C);
-      if(step <= 1e-4){
-        Rprintf("error in update theta\n");
-        //theta1.col(i) = theta0.row(i).t();
-      }
     }
     final_step(i) = step;
   }
@@ -103,7 +91,6 @@ Rcpp::List Update_theta_init_cpp(const arma::mat &theta0, const arma::mat &respo
 // [[Rcpp::export]]
 double neg_loglik_j_cpp(const arma::vec &response_j, const arma::vec &nonmis_ind_j,
                         const arma::vec &A_j, const arma::mat &theta){
-  int N = response_j.n_elem;
   arma::vec tmp = theta * A_j;
-  return -arma::accu(nonmis_ind_j % (tmp % response_j - log(1+exp(tmp))))/N;
+  return -arma::accu(nonmis_ind_j % (tmp % response_j - log(1+exp(tmp))));
 }

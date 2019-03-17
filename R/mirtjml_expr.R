@@ -30,7 +30,7 @@
 #' @importFrom GPArotation GPFoblq
 #' @export mirtjml_expr
 mirtjml_expr <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = NULL, 
-                    tol = 1e-4, print_proc = TRUE, parallel = FALSE){
+                    tol = 1, print_proc = TRUE, parallel = FALSE){
   N <- nrow(response)
   J <- ncol(response)
   nonmis_ind <- 1 - is.na(response)

@@ -10,9 +10,8 @@ using namespace std;
 // [[Rcpp::export]]
 arma::vec grad_neg_loglik_A_j_cpp(const arma::vec &response_j, const arma::vec &nonmis_ind_j,
                                   const arma::vec &A_j, const arma::mat &theta){
-  int N = response_j.n_elem;
   arma::vec tmp = response_j - 1 / (1 + exp(-theta * A_j));
-  return -theta.t() * (nonmis_ind_j % tmp)/N;
+  return -theta.t() * (nonmis_ind_j % tmp);
 }
 // [[Rcpp::plugins(openmp)]]
 arma::mat Update_A_cpp(const arma::mat &A0, const arma::mat &response, const arma::mat &nonmis_ind,
@@ -31,10 +30,6 @@ arma::mat Update_A_cpp(const arma::mat &A0, const arma::mat &response, const arm
       step *= 0.5;
       A1.col(j) = A0.row(j).t() - step * h;
       A1.col(j) = prox_func_cpp(A1.col(j), cc);
-      if(step <= 1e-4){
-        Rprintf("error in update A\n");
-        // there will be problem if step size is too small
-      }
     }
     //Rcpp::Rcout << "\n final step loop when updating A = "<< -log(step/step_A)/log(2)<< "\n";
   }
@@ -67,9 +62,8 @@ Rcpp::List Update_A_init_cpp(const arma::mat &A0, const arma::mat &response, con
 // [[Rcpp::export]]
 Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind, arma::mat theta0,
                                 arma::mat A0, double cc, double tol, bool print_proc, bool parallel){
-  // int N = theta0.n_rows;
-  // int K = theta0.n_cols;
-  // int J = A0.n_rows;
+  int N = theta0.n_rows;
+  int J = A0.n_rows;
   if(!parallel)
     omp_set_num_threads(1);
   else
@@ -93,15 +87,15 @@ Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind
     eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
     // if(print_proc) Rprintf("\n eps: %f", eps);
     if(print_proc){
-      double cc = log(eps) / log(tol);
+      double dist = (log(eps)-log(N*J)) / (log(tol)-log(N*J));
       Rcpp::Rcout<< "\r|";
-      for(int i=0;i<floor(30*cc);++i){
+      for(int i=0;i<floor(30*dist);++i){
         Rcpp::Rcout << "=";
       }
-      for(int i=0;i<(30-floor(30*cc));++i){
+      for(int i=0;i<(30-floor(30*dist));++i){
         Rcpp::Rcout << " ";
       }
-      int nn = ceil(100*cc);
+      int nn = ceil(100*dist);
       Rcpp::Rcout << "|" << min(100, nn) << "%, " << "eps: " << eps;
     }
   }

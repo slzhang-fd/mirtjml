@@ -8,14 +8,13 @@ using namespace std;
 // [[Rcpp::export]]
 arma::vec grad_neg_loglik_A_j_conf_cpp(const arma::vec &response_j, const arma::vec &nonmis_ind_j,
                                   const arma::vec &A_j, const arma::vec &Q_j, const arma::mat &theta){
-  int N = response_j.n_elem;
   arma::vec tmp = response_j - 1 / (1 + exp(-theta * A_j));
   // arma::vec tmp1 = nonmis_ind_j % tmp;
   // arma::vec res = theta.row(0).t() * tmp1(0);
   // for(unsigned int i=1;i<theta.n_rows;++i){
   //   res += theta.row(i).t() * tmp1(i);
   // }
-  return -(theta.t() * (nonmis_ind_j % tmp)) % Q_j / N;
+  return -(theta.t() * (nonmis_ind_j % tmp)) % Q_j;
   //return -res % Q_j;
 }
 // [[Rcpp::plugins(openmp)]]
@@ -35,10 +34,6 @@ arma::mat Update_A_conf_cpp(const arma::mat &A0, const arma::mat &Q, const arma:
       step *= 0.5;
       A1.col(j) = A0.row(j).t() - step * h;
       A1.col(j) = prox_func_cpp(A1.col(j),cc);
-      if(step <= 1e-4){
-        Rprintf("error in update A\n");
-        //A1.col(j) = A0.row(j).t();
-      }
     }
   }
   return(A1.t());
@@ -61,10 +56,6 @@ Rcpp::List Update_A_conf_init_cpp(const arma::mat &A0, const arma::mat &Q, const
       step *= 0.5;
       A1.col(j) = A0.row(j).t() - step * h;
       A1.col(j) = prox_func_cpp(A1.col(j),cc);
-      if(step <= 1e-4){
-        Rprintf("error in update A\n");
-        //A1.col(j) = A0.row(j).t();
-      }
     }
     final_step(j) = step;
   }
@@ -78,6 +69,8 @@ Rcpp::List cjmle_conf_cpp(const arma::mat &response, const arma::mat &nonmis_ind
     omp_set_num_threads(1);
   else
     omp_set_num_threads(omp_get_num_procs());
+  int N = theta0.n_rows;
+  int J = A0.n_rows;
   int K = theta0.n_cols;
   // Adaptively find initial steps when updating A and theta
   Rcpp::List tmp_theta = Update_theta_init_cpp(theta0, response, nonmis_ind, A0, cc);
@@ -98,15 +91,15 @@ Rcpp::List cjmle_conf_cpp(const arma::mat &response, const arma::mat &nonmis_ind
     eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
     // if(print_proc) Rprintf("\n eps: %f", eps);
     if(print_proc){
-      double cc = log(eps) / log(tol);
+      double dist = (log(eps)-log(N*J)) / (log(tol)-log(N*J));
       Rcpp::Rcout<< "\r|";
-      for(int i=0;i<floor(30*cc);++i){
+      for(int i=0;i<floor(30*dist);++i){
         Rcpp::Rcout << "=";
       }
-      for(int i=0;i<(30-floor(30*cc));++i){
+      for(int i=0;i<(30-floor(30*dist));++i){
         Rcpp::Rcout << " ";
       }
-      int nn = ceil(100*cc);
+      int nn = ceil(100*dist);
       Rcpp::Rcout << "|" << min(100, nn) << "%, " << "eps: " << eps;
     }
   }

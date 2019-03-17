@@ -4,7 +4,7 @@
 \alias{mirtjml_conf}
 \title{Constrained joint maximum likelihood estimation for confirmatory item factor analysis on the multidimensional two parameter logistic model.}
 \usage{
-mirtjml_conf(response, Q, theta0, A0, d0, cc = NULL, tol = 1e-04,
+mirtjml_conf(response, Q, theta0, A0, d0, cc = NULL, tol = 0.01,
   print_proc = TRUE, parallel = FALSE)
 }
 \arguments{
