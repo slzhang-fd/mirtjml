@@ -1,5 +1,9 @@
 
 ** updates
+### 18 Mar, 2019
+- fix optimization stability bug when dimension is large
+
+
 ### 30 Dec, 2018
 - optimized dependent functions
 - adaptively choose initial step sizes, this could speed up examples one time
