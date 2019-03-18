@@ -33,7 +33,7 @@
 #' 
 #' @importFrom stats cov
 #' @export mirtjml_conf
-mirtjml_conf <- function(response, Q, theta0, A0, d0, cc = NULL, tol = 1, print_proc = TRUE, parallel=FALSE){
+mirtjml_conf <- function(response, Q, theta0, A0, d0, cc = NULL, tol = 5, print_proc = TRUE, parallel=FALSE){
   N <- nrow(response)
   J <- ncol(response)
   K <- ncol(Q)
