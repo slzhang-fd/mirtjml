@@ -10,14 +10,12 @@ static int mirtjml_threads = 1;
 static inline int imin(int a, int b) { return a < b ? a : b; }
 static inline int imax(int a, int b) { return a > b ? a : b; }
 
-//' @export 
 // [[Rcpp::export]]
 int getmirtjml_threads() {
   // this is the main getter used by all parallel regions; they specify num_threads(getDTthreads())
   // Therefore keep it light, simple and robust. Local static variable. initDTthreads() ensures 1 <= DTthreads <= omp_get_num_proc()
   return mirtjml_threads;
 }
-//' @export 
 // [[Rcpp::export]]
 int setmirtjml_threads(int threads = -1) {
   // this is the main getter used by all parallel regions; they specify num_threads(getDTthreads())

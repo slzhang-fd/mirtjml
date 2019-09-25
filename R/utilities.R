@@ -29,3 +29,23 @@ svd_start <- function(response, nonmis_ind, K, tol = 0.01){
   A0 <- 1 / sqrt(N) * as.matrix(temp$v[,1:K]) %*% diag(temp$d[1:K], nrow = K, ncol = K)
   return(list("theta0"=theta0, "A0"=A0, "d0"=d0))
 }
+#' Set the number of threads that mirtjml should use
+#' @param threads NULL (default) rereads environment variables. 0 means to use all logical CPUs available. Otherwise a number >= 1
+#' @return The number of threads that mirtjml was using previously
+#' @export setMIRTthreads
+setMIRTthreads <- function(threads = NULL){
+  if(is.null(threads)){
+    setmirtjml_threads(-1)
+  }else{
+    setmirtjml_threads(threads)
+  }
+}
+#' Get the number of threads that mirtjml is using
+#' @return The number of threads that mirtjml is using
+#' @export getMIRTthreads
+getMIRTthreads <- function(){
+  return(getmirtjml_threads())
+} 
+  
+  
+

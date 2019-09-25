@@ -41,12 +41,10 @@ neg_loglik_j_cpp <- function(response_j, nonmis_ind_j, A_j, theta) {
     .Call('_mirtjml_neg_loglik_j_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, theta)
 }
 
-#' @export 
 getmirtjml_threads <- function() {
     .Call('_mirtjml_getmirtjml_threads', PACKAGE = 'mirtjml')
 }
 
-#' @export 
 setmirtjml_threads <- function(threads = -1L) {
     .Call('_mirtjml_setmirtjml_threads', PACKAGE = 'mirtjml', threads)
 }
