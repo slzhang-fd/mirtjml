@@ -54,7 +54,7 @@ arma::mat Update_theta_cpp(const arma::mat &theta0, const arma::mat &response,
     theta1.col(i) = prox_func_theta_cpp(theta1.col(i), C);
     while(neg_loglik_i_cpp(response.row(i).t(), nonmis_ind.row(i).t(), A0, theta1.col(i)) >
             neg_loglik_i_cpp(response.row(i).t(), nonmis_ind.row(i).t(), A0, theta0.row(i).t()) &&
-            step > 1e-4){
+            step > 1e-7){
       step *= 0.5;
       theta1.col(i) = theta0.row(i).t() - step * h;
       theta1.col(i) = prox_func_theta_cpp(theta1.col(i), C);
@@ -78,7 +78,7 @@ Rcpp::List Update_theta_init_cpp(const arma::mat &theta0, const arma::mat &respo
     theta1.col(i) = prox_func_theta_cpp(theta1.col(i), C);
     while(neg_loglik_i_cpp(response.row(i).t(), nonmis_ind.row(i).t(), A0, theta1.col(i)) >
             neg_loglik_i_cpp(response.row(i).t(), nonmis_ind.row(i).t(), A0, theta0.row(i).t()) &&
-            step > 1e-4){
+            step > 1e-7){
       step *= 0.5;
       theta1.col(i) = theta0.row(i).t() - step * h;
       theta1.col(i) = prox_func_theta_cpp(theta1.col(i), C);

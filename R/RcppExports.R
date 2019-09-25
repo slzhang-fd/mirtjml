@@ -5,8 +5,8 @@ grad_neg_loglik_A_j_conf_cpp <- function(response_j, nonmis_ind_j, A_j, Q_j, the
     .Call('_mirtjml_grad_neg_loglik_A_j_conf_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, Q_j, theta)
 }
 
-cjmle_conf_cpp <- function(response, nonmis_ind, theta0, A0, Q, cc, tol, print_proc, parallel) {
-    .Call('_mirtjml_cjmle_conf_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, Q, cc, tol, print_proc, parallel)
+cjmle_conf_cpp <- function(response, nonmis_ind, theta0, A0, Q, cc, tol, print_proc) {
+    .Call('_mirtjml_cjmle_conf_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, Q, cc, tol, print_proc)
 }
 
 #' @useDynLib mirtjml
@@ -17,8 +17,8 @@ grad_neg_loglik_A_j_cpp <- function(response_j, nonmis_ind_j, A_j, theta) {
     .Call('_mirtjml_grad_neg_loglik_A_j_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, theta)
 }
 
-cjmle_expr_cpp <- function(response, nonmis_ind, theta0, A0, cc, tol, print_proc, parallel) {
-    .Call('_mirtjml_cjmle_expr_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, cc, tol, print_proc, parallel)
+cjmle_expr_cpp <- function(response, nonmis_ind, theta0, A0, cc, tol, print_proc) {
+    .Call('_mirtjml_cjmle_expr_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, cc, tol, print_proc)
 }
 
 prox_func_cpp <- function(y, C) {
@@ -39,5 +39,15 @@ grad_neg_loglik_thetai_cpp <- function(response_i, nonmis_ind_i, A, theta_i) {
 
 neg_loglik_j_cpp <- function(response_j, nonmis_ind_j, A_j, theta) {
     .Call('_mirtjml_neg_loglik_j_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, theta)
+}
+
+#' @export 
+getmirtjml_threads <- function() {
+    .Call('_mirtjml_getmirtjml_threads', PACKAGE = 'mirtjml')
+}
+
+#' @export 
+setmirtjml_threads <- function(threads = -1L) {
+    .Call('_mirtjml_setmirtjml_threads', PACKAGE = 'mirtjml', threads)
 }
 

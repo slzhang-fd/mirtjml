@@ -8,7 +8,6 @@
 #' @param cc A constant constraining the magnitude of the norms of person and item parameter vectors.
 #' @param tol The tolerance for convergence with a default value 1e-4.
 #' @param print_proc Print the precision during the esitmation procedure with a default value TRUE.
-#' @param parallel Whether or not enable the parallel computing with a default value FALSE.
 #' 
 #' @return The function returns a list with the following components:
 #' \describe{
@@ -17,7 +16,8 @@
 #'   \item{d_hat}{The estimated intercept parameters.}
 #' }
 #' @references 
-#' Chen, Y., Li, X., & Zhang, S. (2017). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. \emph{arXiv preprint} <arXiv:1712.08966>.
+#' Chen, Y., Li, X., & Zhang, S. (2019). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. 
+#' \emph{Journal of the American Statistical Association} <doi: 10.1080/01621459.2019.1635485>.
 #' @examples
 #' # load a simulated dataset
 #' attach(data_sim)
@@ -33,7 +33,7 @@
 #' 
 #' @importFrom stats cov
 #' @export mirtjml_conf
-mirtjml_conf <- function(response, Q, theta0, A0, d0, cc = NULL, tol = 5, print_proc = TRUE, parallel=FALSE){
+mirtjml_conf <- function(response, Q, theta0, A0, d0, cc = NULL, tol = 5, print_proc = TRUE){
   N <- nrow(response)
   J <- ncol(response)
   K <- ncol(Q)
@@ -44,7 +44,7 @@ mirtjml_conf <- function(response, Q, theta0, A0, d0, cc = NULL, tol = 5, print_
   }
   t1 <- Sys.time()
   res <- cjmle_conf_cpp(response, nonmis_ind, cbind(rep(1,N),theta0),cbind(d0,A0), 
-                        cbind(rep(1,J),Q), cc, tol, print_proc, parallel)
+                        cbind(rep(1,J),Q), cc, tol, print_proc)
   t2 <- Sys.time()
   if(print_proc){
     cat("\n\n", "Precision reached!\n")

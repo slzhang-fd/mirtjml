@@ -5,7 +5,7 @@
 \title{Constrained joint maximum likelihood estimation for confirmatory item factor analysis on the multidimensional two parameter logistic model.}
 \usage{
 mirtjml_conf(response, Q, theta0, A0, d0, cc = NULL, tol = 5,
-  print_proc = TRUE, parallel = FALSE)
+  print_proc = TRUE)
 }
 \arguments{
 \item{response}{N by J matrix containing 0/1/NA responses, where N is the number of respondents, J is the number of items, and NA indicates a missing response.}
@@ -23,8 +23,6 @@ mirtjml_conf(response, Q, theta0, A0, d0, cc = NULL, tol = 5,
 \item{tol}{The tolerance for convergence with a default value 1e-4.}
 
 \item{print_proc}{Print the precision during the esitmation procedure with a default value TRUE.}
-
-\item{parallel}{Whether or not enable the parallel computing with a default value FALSE.}
 }
 \value{
 The function returns a list with the following components:
@@ -52,5 +50,6 @@ res_conf <- mirtjml_conf(response, Q, theta0, A0, d0)
 
 }
 \references{
-Chen, Y., Li, X., & Zhang, S. (2017). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. \emph{arXiv preprint} <arXiv:1712.08966>.
+Chen, Y., Li, X., & Zhang, S. (2019). Structured Latent Factor Analysis for Large-scale Data: Identifiability, Estimability, and Their Implications. 
+\emph{Journal of the American Statistical Association} <doi: 10.1080/01621459.2019.1635485>.
 }

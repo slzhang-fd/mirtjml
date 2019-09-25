@@ -1,8 +1,9 @@
-
 #ifndef MIRTJML_OMP_H_
 #define MIRTJML_OMP_H_
 #if defined(_OPENMP)
 #include <omp.h>
+int getmirtjml_threads();
+int setmirtjml_threads(int);
 #else
 #ifndef DISABLE_OPENMP
 // use pragma message instead of warning

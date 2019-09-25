@@ -22,8 +22,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // cjmle_conf_cpp
-Rcpp::List cjmle_conf_cpp(const arma::mat& response, const arma::mat& nonmis_ind, arma::mat theta0, arma::mat A0, arma::mat Q, double cc, double tol, bool print_proc, bool parallel);
-RcppExport SEXP _mirtjml_cjmle_conf_cpp(SEXP responseSEXP, SEXP nonmis_indSEXP, SEXP theta0SEXP, SEXP A0SEXP, SEXP QSEXP, SEXP ccSEXP, SEXP tolSEXP, SEXP print_procSEXP, SEXP parallelSEXP) {
+Rcpp::List cjmle_conf_cpp(const arma::mat& response, const arma::mat& nonmis_ind, arma::mat theta0, arma::mat A0, arma::mat Q, double cc, double tol, bool print_proc);
+RcppExport SEXP _mirtjml_cjmle_conf_cpp(SEXP responseSEXP, SEXP nonmis_indSEXP, SEXP theta0SEXP, SEXP A0SEXP, SEXP QSEXP, SEXP ccSEXP, SEXP tolSEXP, SEXP print_procSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -35,8 +35,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type cc(ccSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< bool >::type print_proc(print_procSEXP);
-    Rcpp::traits::input_parameter< bool >::type parallel(parallelSEXP);
-    rcpp_result_gen = Rcpp::wrap(cjmle_conf_cpp(response, nonmis_ind, theta0, A0, Q, cc, tol, print_proc, parallel));
+    rcpp_result_gen = Rcpp::wrap(cjmle_conf_cpp(response, nonmis_ind, theta0, A0, Q, cc, tol, print_proc));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -55,8 +54,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // cjmle_expr_cpp
-Rcpp::List cjmle_expr_cpp(const arma::mat& response, const arma::mat& nonmis_ind, arma::mat theta0, arma::mat A0, double cc, double tol, bool print_proc, bool parallel);
-RcppExport SEXP _mirtjml_cjmle_expr_cpp(SEXP responseSEXP, SEXP nonmis_indSEXP, SEXP theta0SEXP, SEXP A0SEXP, SEXP ccSEXP, SEXP tolSEXP, SEXP print_procSEXP, SEXP parallelSEXP) {
+Rcpp::List cjmle_expr_cpp(const arma::mat& response, const arma::mat& nonmis_ind, arma::mat theta0, arma::mat A0, double cc, double tol, bool print_proc);
+RcppExport SEXP _mirtjml_cjmle_expr_cpp(SEXP responseSEXP, SEXP nonmis_indSEXP, SEXP theta0SEXP, SEXP A0SEXP, SEXP ccSEXP, SEXP tolSEXP, SEXP print_procSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -67,8 +66,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type cc(ccSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< bool >::type print_proc(print_procSEXP);
-    Rcpp::traits::input_parameter< bool >::type parallel(parallelSEXP);
-    rcpp_result_gen = Rcpp::wrap(cjmle_expr_cpp(response, nonmis_ind, theta0, A0, cc, tol, print_proc, parallel));
+    rcpp_result_gen = Rcpp::wrap(cjmle_expr_cpp(response, nonmis_ind, theta0, A0, cc, tol, print_proc));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -139,17 +137,40 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getmirtjml_threads
+int getmirtjml_threads();
+RcppExport SEXP _mirtjml_getmirtjml_threads() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(getmirtjml_threads());
+    return rcpp_result_gen;
+END_RCPP
+}
+// setmirtjml_threads
+int setmirtjml_threads(int threads);
+RcppExport SEXP _mirtjml_setmirtjml_threads(SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(setmirtjml_threads(threads));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mirtjml_grad_neg_loglik_A_j_conf_cpp", (DL_FUNC) &_mirtjml_grad_neg_loglik_A_j_conf_cpp, 5},
-    {"_mirtjml_cjmle_conf_cpp", (DL_FUNC) &_mirtjml_cjmle_conf_cpp, 9},
+    {"_mirtjml_cjmle_conf_cpp", (DL_FUNC) &_mirtjml_cjmle_conf_cpp, 8},
     {"_mirtjml_grad_neg_loglik_A_j_cpp", (DL_FUNC) &_mirtjml_grad_neg_loglik_A_j_cpp, 4},
-    {"_mirtjml_cjmle_expr_cpp", (DL_FUNC) &_mirtjml_cjmle_expr_cpp, 8},
+    {"_mirtjml_cjmle_expr_cpp", (DL_FUNC) &_mirtjml_cjmle_expr_cpp, 7},
     {"_mirtjml_prox_func_cpp", (DL_FUNC) &_mirtjml_prox_func_cpp, 2},
     {"_mirtjml_neg_loglik", (DL_FUNC) &_mirtjml_neg_loglik, 3},
     {"_mirtjml_neg_loglik_i_cpp", (DL_FUNC) &_mirtjml_neg_loglik_i_cpp, 4},
     {"_mirtjml_grad_neg_loglik_thetai_cpp", (DL_FUNC) &_mirtjml_grad_neg_loglik_thetai_cpp, 4},
     {"_mirtjml_neg_loglik_j_cpp", (DL_FUNC) &_mirtjml_neg_loglik_j_cpp, 4},
+    {"_mirtjml_getmirtjml_threads", (DL_FUNC) &_mirtjml_getmirtjml_threads, 0},
+    {"_mirtjml_setmirtjml_threads", (DL_FUNC) &_mirtjml_setmirtjml_threads, 1},
     {NULL, NULL, 0}
 };
 

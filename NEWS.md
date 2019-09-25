@@ -1,5 +1,9 @@
 
 ** updates
+### 25 Sep, 2019
+- fix the convergence rate issue
+- reconstruct a safer way to perform multi-threads computing in R environment without affecting other packages
+
 ### 18 Mar, 2019
 - fix optimization stability bug when dimension is large
 

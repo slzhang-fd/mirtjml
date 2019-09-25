@@ -18,7 +18,7 @@ arma::mat Update_A_cpp(const arma::mat &A0, const arma::mat &response, const arm
                        const arma::mat &theta1, double cc, double step_A = 5){
   arma::mat A1 = A0.t();
   int J = A0.n_rows;
-#pragma omp parallel for
+#pragma omp parallel for num_threads(getmirtjml_threads())
   for(int j=0;j<J;++j){
     double step = step_A; 
     arma::vec h = grad_neg_loglik_A_j_cpp(response.col(j), nonmis_ind.col(j), A0.row(j).t(), theta1);
@@ -26,7 +26,7 @@ arma::mat Update_A_cpp(const arma::mat &A0, const arma::mat &response, const arm
     A1.col(j) = prox_func_cpp(A1.col(j), cc);
     while(neg_loglik_j_cpp(response.col(j), nonmis_ind.col(j), A1.col(j), theta1) > 
             neg_loglik_j_cpp(response.col(j), nonmis_ind.col(j), A0.row(j).t(), theta1) &&
-          step > 1e-4){
+          step > 1e-7){
       step *= 0.5;
       A1.col(j) = A0.row(j).t() - step * h;
       A1.col(j) = prox_func_cpp(A1.col(j), cc);
@@ -41,7 +41,7 @@ Rcpp::List Update_A_init_cpp(const arma::mat &A0, const arma::mat &response, con
   arma::mat A1 = A0.t();
   int J = A0.n_rows;
   arma::vec final_step(J);
-#pragma omp parallel for
+#pragma omp parallel for num_threads(getmirtjml_threads())
   for(int j=0;j<J;++j){
     double step = step_A; 
     arma::vec h = grad_neg_loglik_A_j_cpp(response.col(j), nonmis_ind.col(j), A0.row(j).t(), theta1);
@@ -49,7 +49,7 @@ Rcpp::List Update_A_init_cpp(const arma::mat &A0, const arma::mat &response, con
     A1.col(j) = prox_func_cpp(A1.col(j), cc);
     while(neg_loglik_j_cpp(response.col(j), nonmis_ind.col(j), A1.col(j), theta1) > 
             neg_loglik_j_cpp(response.col(j), nonmis_ind.col(j), A0.row(j).t(), theta1) &&
-            step > 1e-4){
+            step > 1e-7){
       step *= 0.5;
       A1.col(j) = A0.row(j).t() - step * h;
       A1.col(j) = prox_func_cpp(A1.col(j), cc);
@@ -61,13 +61,9 @@ Rcpp::List Update_A_init_cpp(const arma::mat &A0, const arma::mat &response, con
 }
 // [[Rcpp::export]]
 Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind, arma::mat theta0,
-                                arma::mat A0, double cc, double tol, bool print_proc, bool parallel){
+                                arma::mat A0, double cc, double tol, bool print_proc){
   int N = theta0.n_rows;
   int J = A0.n_rows;
-  if(!parallel)
-    omp_set_num_threads(1);
-  else
-    omp_set_num_threads(omp_get_num_procs());
   // Adaptively find initial steps when updating A and theta
   Rcpp::List tmp_theta = Update_theta_init_cpp(theta0, response, nonmis_ind, A0, cc);
   arma::mat theta1 = tmp_theta[0];
