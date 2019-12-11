@@ -1,5 +1,6 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 #include <RcppArmadillo.h>
+#include "mirtjml_omp.h"
 
 // [[Rcpp::export]]
 arma::vec prox_func_cpp(const arma::vec &y, double C){
@@ -24,19 +25,19 @@ arma::vec prox_func_theta_cpp(arma::vec y, double C){
 }
 // [[Rcpp::export]]
 double neg_loglik(const arma::mat &thetaA, const arma::mat &response, const arma::mat &nonmis_ind){
-  double res = arma::accu( nonmis_ind % (thetaA % response - log(1+exp(thetaA))) );
+  double res = arma::accu( nonmis_ind % (thetaA % response - arma::log(1.0+arma::exp(thetaA))) );
   return -res;
 }
 // [[Rcpp::export]]
 double neg_loglik_i_cpp(const arma::vec &response_i, const arma::vec &nonmis_ind_i,
                         const arma::mat &A, const arma::vec &theta_i){
   arma::vec tmp = A * theta_i;
-  return -arma::accu(nonmis_ind_i % (tmp % response_i - log(1 + exp(tmp))));
+  return -arma::accu(nonmis_ind_i % (tmp % response_i - arma::log(1.0 + arma::exp(tmp))));
 }
 // [[Rcpp::export]]
 arma::vec grad_neg_loglik_thetai_cpp(const arma::vec &response_i, const arma::vec &nonmis_ind_i,
                                      const arma::mat &A, const arma::vec &theta_i){
-  arma::vec tmp = response_i - 1 / (1 + exp(- A * theta_i));
+  arma::vec tmp = response_i - 1.0 / (1.0 + arma::exp(- A * theta_i));
   return -A.t() * (nonmis_ind_i % tmp);
 }
 
@@ -45,7 +46,7 @@ arma::mat Update_theta_cpp(const arma::mat &theta0, const arma::mat &response,
                            const arma::mat &nonmis_ind, const arma::mat &A0, double C, double step_theta=200){
   arma::mat theta1 = theta0.t();
   int N = response.n_rows;
-#pragma omp parallel for
+#pragma omp parallel for num_threads(getmirtjml_threads())
   for(int i=0;i<N;++i){
     double step = step_theta;
     arma::vec h = grad_neg_loglik_thetai_cpp(response.row(i).t(), nonmis_ind.row(i).t(), A0, theta0.row(i).t());
@@ -69,7 +70,7 @@ Rcpp::List Update_theta_init_cpp(const arma::mat &theta0, const arma::mat &respo
   arma::mat theta1 = theta0.t();
   int N = response.n_rows;
   arma::vec final_step(N);
-#pragma omp parallel for
+#pragma omp parallel for num_threads(getmirtjml_threads())
   for(int i=0;i<N;++i){
     double step = step_theta;
     arma::vec h = grad_neg_loglik_thetai_cpp(response.row(i).t(), nonmis_ind.row(i).t(), A0, theta0.row(i).t());

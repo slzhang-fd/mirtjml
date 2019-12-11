@@ -21,6 +21,11 @@ cjmle_expr_cpp <- function(response, nonmis_ind, theta0, A0, cc, tol, print_proc
     .Call('_mirtjml_cjmle_expr_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, cc, tol, print_proc)
 }
 
+#' @export
+cjmle_expr_simu <- function(response, nonmis_ind, theta0, A0, A_true, cc, tol, max_steps = 1000L, print_proc = FALSE) {
+    .Call('_mirtjml_cjmle_expr_simu', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, A_true, cc, tol, max_steps, print_proc)
+}
+
 prox_func_cpp <- function(y, C) {
     .Call('_mirtjml_prox_func_cpp', PACKAGE = 'mirtjml', y, C)
 }
