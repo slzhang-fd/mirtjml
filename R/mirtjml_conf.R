@@ -6,7 +6,7 @@
 #' @param A0 J by K matrix, the initial value of loading matrix, satisfying the constraints given by Q.
 #' @param d0 Length J vector, the initial value of intercept parameters.
 #' @param cc A constant constraining the magnitude of the norms of person and item parameter vectors.
-#' @param tol The tolerance for convergence with a default value 1e-4.
+#' @param tol The tolerance for convergence with a default value 5.
 #' @param print_proc Print the precision during the esitmation procedure with a default value TRUE.
 #' 
 #' @return The function returns a list with the following components:
@@ -26,6 +26,9 @@
 #' A0 <- Q
 #' d0 <- rep(0, J)
 #' theta0 <- matrix(rnorm(N*K, 0, 1),N)
+#' 
+#' # use all available cores by running
+#' # setMIRTthreads(-1)
 #' 
 #' # run the confirmatory analysis
 #' res_conf <- mirtjml_conf(response, Q, theta0, A0, d0)
