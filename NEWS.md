@@ -4,6 +4,7 @@
 - fix a convergence rate issue
 - reconstruct a safer way to perform multi-threads computing in R environment without affecting other packages
 - perform an initialize procedure to determine proper step sizes for optimization for a better performance
+- update the status of cited papers
 
 ### 18 Mar, 2019
 - fix optimization stability bug when dimension is large
