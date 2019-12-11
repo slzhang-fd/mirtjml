@@ -22,7 +22,7 @@ mirtjml_expr(response, K, theta0 = NULL, A0 = NULL, d0 = NULL,
 
 \item{tol}{The tolerance for convergence with a default value 5.}
 
-\item{print_proc}{Print the precision during the esitmation procedure with a default value TRUE.}
+\item{print_proc}{Print the precision during the estimation procedure with a default value TRUE.}
 }
 \value{
 The function returns a list with the following components:
