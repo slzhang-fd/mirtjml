@@ -35,7 +35,7 @@ svd_start <- function(response, nonmis_ind, K, tol = 0.01){
 #' @export setMIRTthreads
 setMIRTthreads <- function(threads = NULL){
   if(is.null(threads)){
-    setmirtjml_threads(-1)
+    setmirtjml_threads(1)
   }else{
     setmirtjml_threads(threads)
   }
