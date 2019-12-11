@@ -1,7 +1,6 @@
 #include <RcppArmadillo.h>
 #include "depend_funcs.h"
 #include "mirtjml_omp.h"
-#include <ctime>
 
 //' @useDynLib mirtjml
 //' @importFrom Rcpp evalCpp
@@ -99,71 +98,4 @@ Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind
   return Rcpp::List::create(Rcpp::Named("A") = A1,
                             Rcpp::Named("theta") = theta1,
                             Rcpp::Named("obj") = neg_loglik(theta1*A1.t(), response, nonmis_ind));
-}
-
-//' @export
-// [[Rcpp::export]]
-Rcpp::List cjmle_expr_simu(const arma::mat &response, const arma::mat &nonmis_ind, arma::mat theta0,
-                          arma::mat A0, arma::mat A_true, double cc, double tol, int max_steps = 1000,
-                          bool print_proc = false){
-  int K = A0.n_cols - 1;
-  
-  int mcn = 0;
-  // clock_t begin = clock(); 
-  // double elapsed_secs0, elapsed_secs = 0;
-  // int time_record_num = (int)max_time / 1;
-  // arma::vec time_points = arma::zeros(time_record_num);
-  arma::vec sin_angle = arma::zeros(max_steps);
-  // arma::vec step_points = arma::zeros(time_record_num);
-  
-  // obtain left sigular vectors for true A
-  arma::mat U1, V1, U2, V2;
-  arma::vec s1, s2;
-  arma::svd(U1, s1, V1, A_true);
-  U1 = U1.cols(0, K-1);
-  
-  // Adaptively find initial steps when updating A and theta
-  Rcpp::List tmp_theta = Update_theta_init_cpp(theta0, response, nonmis_ind, A0, cc);
-  arma::mat theta1 = tmp_theta[0];
-  arma::vec theta_step = tmp_theta[1];
-  double theta_init_step = arma::mean(theta_step);
-  Rcpp::List tmp_A = Update_A_init_cpp(A0, response, nonmis_ind, theta1, cc);
-  arma::mat A1 = tmp_A[0];
-  arma::vec A_step = tmp_A[1];
-  double A_init_step = arma::mean(A_step)/2;
-  
-  double eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
-  while(eps > tol){
-    mcn += 1;
-    theta0 = theta1;
-    A0 = A1;
-    theta1 = Update_theta_cpp(theta0, response, nonmis_ind, A0, cc, theta_init_step);
-    A1 = Update_A_cpp(A0, response, nonmis_ind, theta1, cc, A_init_step);
-    eps = neg_loglik(theta0*A0.t(), response, nonmis_ind) - neg_loglik(theta1*A1.t(), response, nonmis_ind);
-    
-    // calculate cosine between A_hat and A_true
-    arma::svd(U2, s2, V2, A1.cols(1, K));
-    arma::vec s_tmp = arma::svd(U1.t() * U2.cols(0, K-1));
-
-    // clock_t end = clock();
-    // elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
-    // if(elapsed_secs - elapsed_secs0 > 1){
-    //   Rcpp::Rcout << "eps: " << eps << " elapsed time: " << elapsed_secs <<
-    //     " step: " << mcn <<
-    //     " angle A_true, A_hat: " << std::sqrt(1 - s_tmp(K-1)) << std::endl;
-    //   time_ind = (int)elapsed_secs / 1;
-    //   time_points[time_ind-1] = elapsed_secs;
-    //   sin_angle[time_ind -1] = std::sqrt(1 - s_tmp(K-1));
-    //   step_points[time_ind - 1] = mcn;
-    //   elapsed_secs0 = elapsed_secs;
-    // }
-    sin_angle(mcn -1) = std::sqrt(1 - s_tmp(K-1));
-    if(print_proc)
-      Rcpp::Rcout << "eps: " << eps << " step: " << mcn <<
-        " angle A_true, A_hat: " << std::sqrt(1 - s_tmp(K-1)) << std::endl;
-  }
-  return Rcpp::List::create(Rcpp::Named("A") = A1,
-                            Rcpp::Named("theta") = theta1,
-                            Rcpp::Named("obj") = neg_loglik(theta1*A1.t(), response, nonmis_ind),
-                            Rcpp::Named("sin_angle") = sin_angle.subvec(0, mcn-1));
 }

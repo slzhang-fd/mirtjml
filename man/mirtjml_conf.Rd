@@ -20,9 +20,9 @@ mirtjml_conf(response, Q, theta0, A0, d0, cc = NULL, tol = 5,
 
 \item{cc}{A constant constraining the magnitude of the norms of person and item parameter vectors.}
 
-\item{tol}{The tolerance for convergence with a default value 1e-4.}
+\item{tol}{The tolerance for convergence with a default value 5.}
 
-\item{print_proc}{Print the precision during the esitmation procedure with a default value TRUE.}
+\item{print_proc}{Print the precision during the estimation procedure with a default value TRUE.}
 }
 \value{
 The function returns a list with the following components:
@@ -43,6 +43,9 @@ attach(data_sim)
 A0 <- Q
 d0 <- rep(0, J)
 theta0 <- matrix(rnorm(N*K, 0, 1),N)
+
+# use all available cores by running
+# setMIRTthreads(-1)
 
 # run the confirmatory analysis
 res_conf <- mirtjml_conf(response, Q, theta0, A0, d0)
