@@ -4,8 +4,16 @@
 \alias{mirtjml_conf}
 \title{Constrained joint maximum likelihood estimation for confirmatory item factor analysis on the multidimensional two parameter logistic model.}
 \usage{
-mirtjml_conf(response, Q, theta0, A0, d0, cc = NULL, tol = 5,
-  print_proc = TRUE)
+mirtjml_conf(
+  response,
+  Q,
+  theta0,
+  A0,
+  d0,
+  cc = NULL,
+  tol = 5,
+  print_proc = TRUE
+)
 }
 \arguments{
 \item{response}{N by J matrix containing 0/1/NA responses, where N is the number of respondents, J is the number of items, and NA indicates a missing response.}

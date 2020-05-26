@@ -4,7 +4,9 @@
 \name{data_sim}
 \alias{data_sim}
 \title{Simulated dataset for item factor analysis on the multidimensional two parameter logistic model.}
-\format{An object of class \code{list} of length 9.}
+\format{
+An object of class \code{list} of length 9.
+}
 \usage{
 data_sim
 }

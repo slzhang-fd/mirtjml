@@ -4,8 +4,17 @@
 \alias{cjmle_expr_simu}
 \title{Simulation for the book chapter}
 \usage{
-cjmle_expr_simu(response, nonmis_ind, theta0, A0, A_true, cc, tol,
-  max_steps = 1000L, print_proc = FALSE)
+cjmle_expr_simu(
+  response,
+  nonmis_ind,
+  theta0,
+  A0,
+  A_true,
+  cc,
+  tol,
+  max_steps = 1000L,
+  print_proc = FALSE
+)
 }
 \description{
 Simulation for the book chapter
