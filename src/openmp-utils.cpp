@@ -20,9 +20,9 @@ int getmirtjml_threads() {
 int setmirtjml_threads(int threads = -1) {
   // this is the main getter used by all parallel regions; they specify num_threads(getDTthreads())
   // Therefore keep it light, simple and robust. Local static variable. initDTthreads() ensures 1 <= DTthreads <= omp_get_num_proc()
-#ifndef _OPENMP
-  Rprintf("This installation of mirtjml has not been compiled with OpenMP support.\n");
-#endif
+// #ifndef _OPENMP
+//   Rprintf("This installation of mirtjml has not been compiled with OpenMP support.\n");
+// #endif
   int old = mirtjml_threads;
   if(threads == -1){
     mirtjml_threads = omp_get_num_procs();
