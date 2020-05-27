@@ -15,7 +15,7 @@ svd_start <- function(response, nonmis_ind, K, tol = 0.01){
   X <- (2 * response - 1) * nonmis_ind
   X[is.na(X)] <- 0
   temp <- svd(X)
-  eff_num <- sum(temp$d >= 2*sqrt(N*p_hat))
+  eff_num <- max(1,sum(temp$d >= 2*sqrt(N*p_hat)))
   diagmat <- matrix(0, eff_num, eff_num)
   diag(diagmat) <- temp$d[1:eff_num]
   X <- as.matrix(temp$u[,1:eff_num]) %*% diagmat %*% t(as.matrix(temp$v[,1:eff_num]))
