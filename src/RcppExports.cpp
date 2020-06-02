@@ -166,6 +166,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// hasOpenMP
+bool hasOpenMP();
+RcppExport SEXP _mirtjml_hasOpenMP() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(hasOpenMP());
+    return rcpp_result_gen;
+END_RCPP
+}
 // setmirtjml_threads
 int setmirtjml_threads(int threads);
 RcppExport SEXP _mirtjml_setmirtjml_threads(SEXP threadsSEXP) {
@@ -190,6 +200,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mirtjml_grad_neg_loglik_thetai_cpp", (DL_FUNC) &_mirtjml_grad_neg_loglik_thetai_cpp, 4},
     {"_mirtjml_neg_loglik_j_cpp", (DL_FUNC) &_mirtjml_neg_loglik_j_cpp, 4},
     {"_mirtjml_getmirtjml_threads", (DL_FUNC) &_mirtjml_getmirtjml_threads, 0},
+    {"_mirtjml_hasOpenMP", (DL_FUNC) &_mirtjml_hasOpenMP, 0},
     {"_mirtjml_setmirtjml_threads", (DL_FUNC) &_mirtjml_setmirtjml_threads, 1},
     {NULL, NULL, 0}
 };

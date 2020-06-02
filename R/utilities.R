@@ -46,6 +46,11 @@ setMIRTthreads <- function(threads = NULL){
 getMIRTthreads <- function(){
   return(getmirtjml_threads())
 } 
+
+
+ChasOpenMP <- function(){
+  return(hasOpenMP())
+}
   
   
 

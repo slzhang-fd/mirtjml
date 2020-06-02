@@ -51,6 +51,10 @@ getmirtjml_threads <- function() {
     .Call('_mirtjml_getmirtjml_threads', PACKAGE = 'mirtjml')
 }
 
+hasOpenMP <- function() {
+    .Call('_mirtjml_hasOpenMP', PACKAGE = 'mirtjml')
+}
+
 setmirtjml_threads <- function(threads = -1L) {
     .Call('_mirtjml_setmirtjml_threads', PACKAGE = 'mirtjml', threads)
 }
