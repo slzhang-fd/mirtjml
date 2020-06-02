@@ -70,25 +70,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// cjmle_expr_simu
-Rcpp::List cjmle_expr_simu(const arma::mat& response, const arma::mat& nonmis_ind, arma::mat theta0, arma::mat A0, arma::mat A_true, double cc, double tol, int max_steps, bool print_proc);
-RcppExport SEXP _mirtjml_cjmle_expr_simu(SEXP responseSEXP, SEXP nonmis_indSEXP, SEXP theta0SEXP, SEXP A0SEXP, SEXP A_trueSEXP, SEXP ccSEXP, SEXP tolSEXP, SEXP max_stepsSEXP, SEXP print_procSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type response(responseSEXP);
-    Rcpp::traits::input_parameter< const arma::mat& >::type nonmis_ind(nonmis_indSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type theta0(theta0SEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type A0(A0SEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type A_true(A_trueSEXP);
-    Rcpp::traits::input_parameter< double >::type cc(ccSEXP);
-    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
-    Rcpp::traits::input_parameter< int >::type max_steps(max_stepsSEXP);
-    Rcpp::traits::input_parameter< bool >::type print_proc(print_procSEXP);
-    rcpp_result_gen = Rcpp::wrap(cjmle_expr_simu(response, nonmis_ind, theta0, A0, A_true, cc, tol, max_steps, print_proc));
-    return rcpp_result_gen;
-END_RCPP
-}
 // prox_func_cpp
 arma::vec prox_func_cpp(const arma::vec& y, double C);
 RcppExport SEXP _mirtjml_prox_func_cpp(SEXP ySEXP, SEXP CSEXP) {
@@ -193,7 +174,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mirtjml_cjmle_conf_cpp", (DL_FUNC) &_mirtjml_cjmle_conf_cpp, 8},
     {"_mirtjml_grad_neg_loglik_A_j_cpp", (DL_FUNC) &_mirtjml_grad_neg_loglik_A_j_cpp, 4},
     {"_mirtjml_cjmle_expr_cpp", (DL_FUNC) &_mirtjml_cjmle_expr_cpp, 7},
-    {"_mirtjml_cjmle_expr_simu", (DL_FUNC) &_mirtjml_cjmle_expr_simu, 9},
     {"_mirtjml_prox_func_cpp", (DL_FUNC) &_mirtjml_prox_func_cpp, 2},
     {"_mirtjml_neg_loglik", (DL_FUNC) &_mirtjml_neg_loglik, 3},
     {"_mirtjml_neg_loglik_i_cpp", (DL_FUNC) &_mirtjml_neg_loglik_i_cpp, 4},

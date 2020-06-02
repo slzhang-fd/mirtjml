@@ -100,8 +100,6 @@ Rcpp::List cjmle_expr_cpp(const arma::mat &response, const arma::mat &nonmis_ind
                             Rcpp::Named("obj") = neg_loglik(theta1*A1.t(), response, nonmis_ind));
 }
 //' Simulation for the book chapter
-//' @export
-// [[Rcpp::export]]
 Rcpp::List cjmle_expr_simu(const arma::mat &response, const arma::mat &nonmis_ind, arma::mat theta0,
                            arma::mat A0, arma::mat A_true, double cc, double tol, int max_steps = 1000,
                            bool print_proc = false){

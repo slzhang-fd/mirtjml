@@ -1,5 +1,8 @@
 
 ** updates
+### 2 June, 2020
+- fix a openMP issue for macOS with R 4.0.0
+
 ### 11 Dec, 2019
 - fix a convergence rate issue
 - reconstruct a safer way to perform multi-threads computing in R environment without affecting other packages

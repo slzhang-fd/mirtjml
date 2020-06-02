@@ -13,18 +13,15 @@ cjmle_conf_cpp <- function(response, nonmis_ind, theta0, A0, Q, cc, tol, print_p
 #' @importFrom Rcpp evalCpp
 NULL
 
+#' Simulation for the book chapter
+NULL
+
 grad_neg_loglik_A_j_cpp <- function(response_j, nonmis_ind_j, A_j, theta) {
     .Call('_mirtjml_grad_neg_loglik_A_j_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, theta)
 }
 
 cjmle_expr_cpp <- function(response, nonmis_ind, theta0, A0, cc, tol, print_proc) {
     .Call('_mirtjml_cjmle_expr_cpp', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, cc, tol, print_proc)
-}
-
-#' Simulation for the book chapter
-#' @export
-cjmle_expr_simu <- function(response, nonmis_ind, theta0, A0, A_true, cc, tol, max_steps = 1000L, print_proc = FALSE) {
-    .Call('_mirtjml_cjmle_expr_simu', PACKAGE = 'mirtjml', response, nonmis_ind, theta0, A0, A_true, cc, tol, max_steps, print_proc)
 }
 
 prox_func_cpp <- function(y, C) {
