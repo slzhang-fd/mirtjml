@@ -15,7 +15,7 @@ svd_start <- function(response, nonmis_ind, K, tol = 0.01){
   X <- (2 * response - 1) * nonmis_ind
   X[is.na(X)] <- 0
   temp <- svd(X)
-  eff_num <- max(1,sum(temp$d >= 2*sqrt(N*p_hat)))
+  eff_num <- max(K+1,sum(temp$d >= 2*sqrt(N*p_hat)))
   diagmat <- matrix(0, eff_num, eff_num)
   diag(diagmat) <- temp$d[1:eff_num]
   X <- as.matrix(temp$u[,1:eff_num]) %*% diagmat %*% t(as.matrix(temp$v[,1:eff_num]))
@@ -29,10 +29,14 @@ svd_start <- function(response, nonmis_ind, K, tol = 0.01){
   A0 <- 1 / sqrt(N) * as.matrix(temp$v[,1:K]) %*% diag(temp$d[1:K], nrow = K, ncol = K)
   return(list("theta0"=theta0, "A0"=A0, "d0"=d0))
 }
+ChasOpenMP <- function(){
+  return(hasOpenMP())
+}
+
 #' Set the number of threads that mirtjml should use
 #' @param threads NULL (default) rereads environment variables. 0 means to use all logical CPUs available. Otherwise a number >= 1
 #' @return The number of threads that mirtjml was using previously
-#' @export setMIRTthreads
+#' @export 
 setMIRTthreads <- function(threads = NULL){
   if(is.null(threads)){
     setmirtjml_threads(1)
@@ -42,15 +46,13 @@ setMIRTthreads <- function(threads = NULL){
 }
 #' Get the number of threads that mirtjml is using
 #' @return The number of threads that mirtjml is using
-#' @export getMIRTthreads
+#' @export
 getMIRTthreads <- function(){
   return(getmirtjml_threads())
 } 
 
 
-ChasOpenMP <- function(){
-  return(hasOpenMP())
-}
+
   
   
 

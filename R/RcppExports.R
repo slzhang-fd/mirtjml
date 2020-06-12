@@ -13,9 +13,6 @@ cjmle_conf_cpp <- function(response, nonmis_ind, theta0, A0, Q, cc, tol, print_p
 #' @importFrom Rcpp evalCpp
 NULL
 
-#' Simulation for the book chapter
-NULL
-
 grad_neg_loglik_A_j_cpp <- function(response_j, nonmis_ind_j, A_j, theta) {
     .Call('_mirtjml_grad_neg_loglik_A_j_cpp', PACKAGE = 'mirtjml', response_j, nonmis_ind_j, A_j, theta)
 }
