@@ -12,7 +12,8 @@ mirtjml_expr(
   d0 = NULL,
   cc = NULL,
   tol = 5,
-  print_proc = TRUE
+  print_proc = TRUE,
+  rotation = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ mirtjml_expr(
 \item{tol}{The tolerance for convergence with a default value 5.}
 
 \item{print_proc}{Print the precision during the estimation procedure with a default value TRUE.}
+
+\item{rotation}{Perform a geomin to loadings and latent factor scores (for K>1) with a default value TRUE.}
 }
 \value{
 The function returns a list with the following components:

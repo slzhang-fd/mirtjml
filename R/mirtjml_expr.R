@@ -8,6 +8,7 @@
 #' @param cc A constant constraining the magnitude of the norms of person and item parameter vectors.
 #' @param tol The tolerance for convergence with a default value 5.
 #' @param print_proc Print the precision during the estimation procedure with a default value TRUE.
+#' @param rotation Perform a geomin to loadings and latent factor scores (for K>1) with a default value TRUE.
 #' 
 #' @return The function returns a list with the following components:
 #' \describe{
@@ -32,7 +33,7 @@
 #' @importFrom GPArotation GPFoblq
 #' @export mirtjml_expr
 mirtjml_expr <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = NULL, 
-                    tol = 5, print_proc = TRUE){
+                    tol = 5, print_proc = TRUE, rotation = TRUE){
   N <- nrow(response)
   J <- ncol(response)
   nonmis_ind <- 1 - is.na(response)
@@ -60,7 +61,7 @@ mirtjml_expr <- function(response, K, theta0 = NULL, A0 = NULL, d0 = NULL, cc = 
   res <- cjmle_expr_cpp(response, nonmis_ind, cbind(rep(1,N),theta0),
                         cbind(d0,A0), cc, tol, print_proc)
   res_standard <- standardization_cjmle(res$theta[,2:(K+1)], res$A[,2:(K+1)], res$A[,1])
-  if(K > 1){
+  if(K > 1 & rotation){
     temp <- GPFoblq(res_standard$A1, method = "geomin")
     A_rotated <- temp$loadings
     rotation_M <- temp$Th
